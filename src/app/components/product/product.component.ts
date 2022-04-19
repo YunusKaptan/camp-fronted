@@ -10,6 +10,5 @@ export class ProductComponent implements OnInit {
 
   products:Product[]=[];
   constructor() {}
-
   ngOnInit(): void {}
 }
