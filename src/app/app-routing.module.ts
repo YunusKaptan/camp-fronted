@@ -6,7 +6,6 @@ const routes: Routes = [
   {path:"",pathMatch:"full", component:ProductComponent},
   {path:"products", component:ProductComponent},
   {path:"products/category/:categoryId", component:ProductComponent}
-
 ];
 
 @NgModule({
