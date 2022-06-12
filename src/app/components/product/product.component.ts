@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
+    private cartService:CartService,
     private toastrService:ToastrService) {}
 
     ngOnInit(): void {
@@ -44,6 +46,11 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(product:Product){
-    this.toastrService.success("Added to cart",product.productName)
+    if(product.productId===1){
+      this.toastrService.error("Error", "This item is out of stock ")
+    }else {
+      this.toastrService.success("Added to cart",product.productName)
+      this.cartService.addToCart(product);
+    }   
   }
 }
