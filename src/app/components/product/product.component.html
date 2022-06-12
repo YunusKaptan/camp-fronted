@@ -1,3 +1,13 @@
+<div class="mb-3">
+  <label for="filterText" class="form-label">Search Product</label>
+  <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText"
+  placeholder="Write...">
+</div>
+
+<div *ngIf="filterText.length>2" class="alert alert-success">
+   Looking for {{filterText}}...
+</div>
+
 
 <table *ngIf="dataLoaded==true" class="table">
   <thead>
@@ -6,14 +16,16 @@
       <th>Product Name</th>
       <th>Category</th>
       <th>Price</th>
+      <th>Price with KDV </th>
       <th>UnitsInStock</th>
     </tr>
   </thead>
-  <tr *ngFor="let product of products">
+  <tr *ngFor="let product of products | filterPipe:filterText">
     <td>{{ product.productId }}</td>
-    <td>{{ product.productName }}</td>
+    <td>{{ product.productName | uppercase}}</td>
     <td>{{ product.categoryId }}</td>
-    <td>{{ product.unitPrice }}</td>
+    <td>{{ product.unitPrice | currency}}</td>
+    <td>{{ product.unitPrice | vatAdded:18 | currency}}</td>
     <td>{{ product.unitsInStock }}</td>
   </tr>
 </table>
