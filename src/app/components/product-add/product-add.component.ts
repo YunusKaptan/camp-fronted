@@ -38,13 +38,17 @@ export class ProductAddComponent implements OnInit {
     if (this.productAddForm.valid) {
       let productModel = Object.assign({}, this.productAddForm.value);
       this.productService.add(productModel).subscribe(response=>{
-        console.log(response)
         this.toastrService.success(response.message, "Success")
       },responseError=>{
-        console.log(responseError.error)
-        this.toastrService.error(responseError.error)
+        if(responseError.error.Errors.length>0){
+          console.log(responseError.error.Errors)
+          for (let i = 0; i < responseError.error.Errors.length; i++) {
+            this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"validation error")
+          }
+         }
       })
     } else {
+
       this.toastrService.error("Your attention form is missing!!")
     }
 
